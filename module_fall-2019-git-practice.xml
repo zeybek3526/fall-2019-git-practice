@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_fall-2019-git-practice" default="compile.module.fall-2019-git-practice">
+  <dirname property="module.fall-2019-git-practice.basedir" file="${ant.file.module_fall-2019-git-practice}"/>
+  
+  <property name="module.jdk.home.fall-2019-git-practice" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.fall-2019-git-practice" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.fall-2019-git-practice" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.fall-2019-git-practice" value="-encoding UTF-8 -source 5 -target 1.5 ${compiler.args}"/>
+  
+  <property name="fall-2019-git-practice.output.dir" value="${module.fall-2019-git-practice.basedir}/target/classes"/>
+  <property name="fall-2019-git-practice.testoutput.dir" value="${module.fall-2019-git-practice.basedir}/target/test-classes"/>
+  
+  <path id="fall-2019-git-practice.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="fall-2019-git-practice.module.production.classpath">
+    <path refid="${module.jdk.classpath.fall-2019-git-practice}"/>
+  </path>
+  
+  <path id="fall-2019-git-practice.runtime.production.module.classpath">
+    <pathelement location="${fall-2019-git-practice.output.dir}"/>
+  </path>
+  
+  <path id="fall-2019-git-practice.module.classpath">
+    <path refid="${module.jdk.classpath.fall-2019-git-practice}"/>
+    <pathelement location="${fall-2019-git-practice.output.dir}"/>
+  </path>
+  
+  <path id="fall-2019-git-practice.runtime.module.classpath">
+    <pathelement location="${fall-2019-git-practice.testoutput.dir}"/>
+    <pathelement location="${fall-2019-git-practice.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.fall-2019-git-practice">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.fall-2019-git-practice">
+    <patternset refid="excluded.from.module.fall-2019-git-practice"/>
+  </patternset>
+  
+  <path id="fall-2019-git-practice.module.sourcepath">
+    <dirset dir="${module.fall-2019-git-practice.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="fall-2019-git-practice.module.test.sourcepath">
+    <dirset dir="${module.fall-2019-git-practice.basedir}">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.fall-2019-git-practice" depends="compile.module.fall-2019-git-practice.production,compile.module.fall-2019-git-practice.tests" description="Compile module fall-2019-git-practice"/>
+  
+  <target name="compile.module.fall-2019-git-practice.production" depends="register.custom.compilers" description="Compile module fall-2019-git-practice; production classes">
+    <mkdir dir="${fall-2019-git-practice.output.dir}"/>
+    <javac2 destdir="${fall-2019-git-practice.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.fall-2019-git-practice}/javac">
+      <compilerarg line="${compiler.args.fall-2019-git-practice}"/>
+      <bootclasspath refid="fall-2019-git-practice.module.bootclasspath"/>
+      <classpath refid="fall-2019-git-practice.module.production.classpath"/>
+      <src refid="fall-2019-git-practice.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.fall-2019-git-practice"/>
+    </javac2>
+    
+    <copy todir="${fall-2019-git-practice.output.dir}">
+      <fileset dir="${module.fall-2019-git-practice.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.fall-2019-git-practice.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.fall-2019-git-practice.tests" depends="register.custom.compilers,compile.module.fall-2019-git-practice.production" description="compile module fall-2019-git-practice; test classes" unless="skip.tests">
+    <mkdir dir="${fall-2019-git-practice.testoutput.dir}"/>
+    <javac2 destdir="${fall-2019-git-practice.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.fall-2019-git-practice}/javac">
+      <compilerarg line="${compiler.args.fall-2019-git-practice}"/>
+      <bootclasspath refid="fall-2019-git-practice.module.bootclasspath"/>
+      <classpath refid="fall-2019-git-practice.module.classpath"/>
+      <src refid="fall-2019-git-practice.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.fall-2019-git-practice"/>
+    </javac2>
+    
+    <copy todir="${fall-2019-git-practice.testoutput.dir}">
+      <fileset dir="${module.fall-2019-git-practice.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.fall-2019-git-practice" description="cleanup module">
+    <delete dir="${fall-2019-git-practice.output.dir}"/>
+    <delete dir="${fall-2019-git-practice.testoutput.dir}"/>
+  </target>
+</project>
